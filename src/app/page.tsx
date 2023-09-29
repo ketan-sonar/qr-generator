@@ -6,12 +6,17 @@ import { RefObject, useEffect, useRef, useState } from "react";
 
 export default function Home() {
   const [payload, setPayload] = useState("");
+  const [emptyPayloadError, setEmptyPayloadError] = useState("");
   const [qr, setQr] = useState("");
   const [loading, setLoading] = useState(false);
   const inputRef = useRef() as RefObject<HTMLInputElement>;
 
   const getQR = async () => {
-    if (!payload) return;
+    setQr("");
+    if (!payload) {
+      setEmptyPayloadError("Enter some data to generate QR Code.");
+      return;
+    }
     setLoading(true);
     const res: { data: { success: boolean; img: string } } = await axios.post(
       "/api/getQR",
@@ -24,6 +29,12 @@ export default function Home() {
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
+
+  useEffect(() => {
+    if (payload) {
+      setEmptyPayloadError("");
+    }
+  }, [payload]);
 
   return (
     <div className="w-screen h-screen flex justify-center items-center">
@@ -47,9 +58,7 @@ export default function Home() {
           </button>
         </div>
         <div className="flex justify-center">
-          {!payload && (
-            <p className="italic">Enter some data to generate QR Code.</p>
-          )}
+          {emptyPayloadError && <p className="italic">{emptyPayloadError}</p>}
           {loading ? (
             <p className="italic">Loading...</p>
           ) : (
