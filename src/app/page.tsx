@@ -4,8 +4,6 @@ import axios from "axios";
 import Image from "next/image";
 import { RefObject, useEffect, useRef, useState } from "react";
 
-const API_URL = "https://api.api-ninjas.com/v1/qrcode?format=png&data=";
-
 export default function Home() {
   const [payload, setPayload] = useState("");
   const [qr, setQr] = useState("");
@@ -15,10 +13,11 @@ export default function Home() {
   const getQR = async () => {
     if (!payload) return;
     setLoading(true);
-    const res = await axios.get(API_URL + payload, {
-      headers: { "X-Api-Key": process.env.NEXT_PUBLIC_API_KEY as string },
-    });
-    setQr(res.data);
+    const res: { data: { success: boolean; img: string } } = await axios.post(
+      "/api/getQR",
+      { payload }
+    );
+    setQr(res.data.img);
     setLoading(false);
   };
 
