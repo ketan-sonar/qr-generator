@@ -50,14 +50,17 @@ export default function Home() {
           {!payload && (
             <p className="italic">Enter some data to generate QR Code.</p>
           )}
-          {loading && <p className="italic">Loading...</p>}
-          {qr && (
-            <Image
-              src={`data:image/png;charset=utf-8;base64,${qr}`}
-              alt="QR Code"
-              width={128}
-              height={128}
-            />
+          {loading ? (
+            <p className="italic">Loading...</p>
+          ) : (
+            qr && (
+              <Image
+                src={`data:image/png;charset=utf-8;base64,${qr}`}
+                alt="QR Code"
+                width={128}
+                height={128}
+              />
+            )
           )}
         </div>
       </div>
