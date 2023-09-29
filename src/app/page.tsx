@@ -16,7 +16,7 @@ export default function Home() {
     if (!payload) return;
     setLoading(true);
     const res = await axios.get(API_URL + payload, {
-      headers: { "X-Api-Key": process.env.API_KEY || "" },
+      headers: { "X-Api-Key": process.env.NEXT_PUBLIC_API_KEY as string },
     });
     setQr(res.data);
     setLoading(false);
