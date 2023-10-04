@@ -1,7 +1,7 @@
 # QR Code Generator
 
 A simple web app to generate QR Code for a given data (example: url).  
-[Click here](https://qr-generator-ketan-sonar.vercel.app/) to visit the deployed version.
+[Click here](https://next-qrify.vercel.app/) to visit the deployed version.
 
 ## Tech Stack Used
 
